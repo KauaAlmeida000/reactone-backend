@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estoque</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="inicial.css">
     <link href="https://fonts.cdnfonts.com/css/flapdoodle" rel="stylesheet">
     <!-- Incluindo ícones do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
@@ -16,7 +15,7 @@
     <div class="container1">
         <div class="header">
             <div class="logo">
-                <img src="assets/logo_TotemBook-removebg-preview.png" alt="">
+                <img src="./assets/logoTotemBook.png" alt="">
             </div>
             <div class="menu">
                 <div class="menu-left">
@@ -63,21 +62,8 @@
                 <th>Ação</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>O Senhor dos Anéis</td>
-                <td>J.R.R. Tolkien</td>
-                <td>01/02/2025</td>
-                <td>01/03/2025</td>
-                <td><button class="btn btn-warning btn-sm" onclick="alterarLivroAlugado(this)">Alterar</button></td>
-            </tr>
-            <tr>
-                <td>1984</td>
-                <td>George Orwell</td>
-                <td>03/02/2025</td>
-                <td>03/03/2025</td>
-                <td><button class="btn btn-warning btn-sm" onclick="alterarLivroAlugado(this)">Alterar</button></td>
-            </tr>
+        <tbody id="listalivros">
+            
         </tbody>
     </table>
 
@@ -131,80 +117,7 @@
         </form>
     </div>
 
-    <script>
-        // Função para excluir um livro do estoque
-        function excluirLivroEstoque(button) {
-            const row = button.closest('tr');
-            row.remove(); // Remove a linha da tabela
-        }
-
-        // Função para alterar os dados de um livro alugado
-        function alterarLivroAlugado(button) {
-            const row = button.closest('tr');
-            const titulo = row.cells[0].innerText;
-            const autor = row.cells[1].innerText;
-            const dataEmprestimo = row.cells[2].innerText;
-            const dataDevolucao = row.cells[3].innerText;
-
-            // Ação que você deseja fazer ao alterar
-            alert(`Alterando livro: ${titulo}, ${autor}, ${dataEmprestimo}, ${dataDevolucao}`);
-        }
-
-        // Array para armazenar os livros em estoque
-        let livrosEmEstoque = [
-            { titulo: "O Senhor dos Anéis", autor: "J.R.R. Tolkien", quantidade: 5 },
-            { titulo: "1984", autor: "George Orwell", quantidade: 3 }
-        ];
-
-        // Função para atualizar a tabela de livros em estoque
-        function atualizarTabelaLivros() {
-            const tabela = document.getElementById('tabela-livros').getElementsByTagName('tbody')[0];
-            tabela.innerHTML = ''; // Limpar a tabela antes de atualizar
-
-            livrosEmEstoque.forEach(livro => {
-                const novaLinha = document.createElement('tr');
-                novaLinha.innerHTML = `
-                    <td>${livro.titulo}</td>
-                    <td>${livro.autor}</td>
-                    <td>${livro.quantidade}</td>
-                    <td><button class="btn btn-danger btn-sm" onclick="excluirLivroEstoque(this)">Excluir</button></td>
-                `;
-                tabela.appendChild(novaLinha);
-            });
-        }
-
-        // Função para cadastrar um novo livro
-        function cadastrarLivro(event) {
-            event.preventDefault(); // Evitar o envio do formulário (recarregar a página)
-
-            // Coletar os valores dos campos
-            const titulo = document.getElementById('titulo').value;
-            const autor = document.getElementById('autor').value;
-            const quantidade = parseInt(document.getElementById('quantidade').value);
-
-            // Verificar se os dados são válidos
-            if (!titulo || !autor || isNaN(quantidade) || quantidade <= 0) {
-                alert('Por favor, preencha todos os campos corretamente!');
-                return;
-            }
-
-            // Adicionar o novo livro ao array de livros
-            livrosEmEstoque.push({ titulo, autor, quantidade });
-
-            // Atualizar a tabela
-            atualizarTabelaLivros();
-
-            // Limpar os campos do formulário
-            document.getElementById('form-cadastrar-livro').reset();
-        }
-
-        // Adicionar o evento de envio do formulário
-        document.getElementById('form-cadastrar-livro').addEventListener('submit', cadastrarLivro);
-
-        // Atualizar a tabela inicialmente ao carregar a página
-        window.onload = atualizarTabelaLivros;
-    </script>
-
+    <script src="estoque.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
